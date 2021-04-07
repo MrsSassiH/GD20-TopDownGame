@@ -22,15 +22,29 @@ public class PlayerController : MonoBehaviour
         *- which is of type 'bool'
         */
         bool forward = UnityEngine.Input.GetKey(KeyCode.W);
-        
-        if(forward)
+        bool left = UnityEngine.Input.GetKey(KeyCode.A);
+        bool down = UnityEngine.Input.GetKey(KeyCode.S);
+        bool right = UnityEngine.Input.GetKey(KeyCode.D);
+
+        if (forward)
         {
            /*Transform points to this GameObject's Transform-Component
             * Transform Moves the Transform in a certain direction
             * Vector3.up is always X: 0, Y: 1, Z: 0
             */
             transform.Translate(Vector3.up * (movementSpeed * Time.deltaTime));
-
+        }
+        if(down)
+        {
+            transform.Translate(Vector3.down * (movementSpeed * Time.deltaTime));
+        }
+        if(left)
+        {
+            transform.Translate(Vector3.left * (movementSpeed * Time.deltaTime));
+        }
+        if(right)
+        {
+            transform.Translate(Vector3.right * (movementSpeed * Time.deltaTime));
         }
     }
 
