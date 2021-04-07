@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
      * 0.01 -> 1/100
      */
 
+    [Tooltip("Movement Speed In Meters per Second")]
     public float movementSpeed = 0.1f; 
 
     // Update is called once per frame
