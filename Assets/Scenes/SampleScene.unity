@@ -265,7 +265,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 2
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 80
   moveForwardKey: 119
-  brakeKey: 115
+  reverseKey: 115
   rotateLeftKey: 97
   rotateRightKey: 100
 --- !u!1 &927652450

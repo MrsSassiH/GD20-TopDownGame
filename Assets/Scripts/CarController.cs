@@ -6,7 +6,7 @@ public class CarController : MonoBehaviour
     public float rotationSpeed = 80;
 
     public KeyCode moveForwardKey;
-    public KeyCode brakeKey;
+    public KeyCode reverseKey;
     public KeyCode rotateLeftKey;
     public KeyCode rotateRightKey;
 
@@ -20,9 +20,9 @@ public class CarController : MonoBehaviour
             GetComponent<Rigidbody2D>().AddForce(transform.up);
         }
 
-        //Brakes
-        bool slowDown = Input.GetKey(brakeKey);
-        if(slowDown)
+        //Reverse
+        bool reverse = Input.GetKey(reverseKey);
+        if(reverse)
         {
             GetComponent<Rigidbody2D>().AddForce(-transform.up);
         }
