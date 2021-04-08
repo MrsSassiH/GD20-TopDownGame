@@ -14,6 +14,8 @@ public class MarcCarController : MonoBehaviour
     public KeyCode leftKey;
     public KeyCode leaveCarKey;
 
+    public GameObject driver;
+
     void Update()
     {
         bool forward = UnityEngine.Input.GetKey(moveForwardKey);
@@ -55,16 +57,29 @@ public class MarcCarController : MonoBehaviour
             rigidbody.velocity = Quaternion.Euler(rotateBy) * rigidbody.velocity;
         }
 
-        /*
-        //Leaving a car
-        bool leaveCar = Input.GetKeyDown(leaveCarKey);
-        GameObject human = GameObject.Find("Human");
-
-        if (leaveCar)
+        //Leave a car
+        bool exit = Input.GetKeyDown(leaveCarKey);
+        GameObject bCar = GameObject.Find("BlueCar");
+        GameObject rCar = GameObject.Find("RedCar");
+        //Leave Blue Car
+        if (exit)
         {
-            human.SetActive(true);
-            GetComponent<MarcCarController>().disabled = true;
+            driver.transform.position = this.transform.position;
+
+            driver.gameObject.SetActive(true);
+
+            MarcCarController marcCarController = bCar.GetComponent<MarcCarController>();
+            marcCarController.enabled = false;
         }
-        */
+        //Leave Red Car
+        if (exit)
+        {
+            driver.transform.position = this.transform.position;
+
+            driver.gameObject.SetActive(true);
+
+            MarcCarController marcCarController = rCar.GetComponent<MarcCarController>();
+            marcCarController.enabled = false;
+        }
     }
 }

@@ -47,17 +47,29 @@ public class PlayerMoveController : MonoBehaviour
             transform.Translate(Vector3.right * (movementSpeed * Time.deltaTime));
         }
 
+
         //Entering a car
         bool enterCar = Input.GetKeyDown(enterCarKey);
-        GameObject car = GameObject.Find("BlueCar");
+        GameObject bCar = GameObject.Find("BlueCar");
+        GameObject rCar = GameObject.Find("RedCar");
 
-        float distance = Vector3.Distance(this.transform.position, car.transform.position);
-
-        if(enterCar && (distance < 3))
+        float distanceB = Vector3.Distance(this.transform.position, bCar.transform.position);
+        float distanceR = Vector3.Distance(this.transform.position, rCar.transform.position);
+        //Enter Blue Car
+        if (enterCar && (distanceB < 3f))
         {
-            CarController carController = car.GetComponent<CarController>();
-            carController.enabled = true;
-            carController.driver = this.gameObject;
+            MarcCarController marcCarController = bCar.GetComponent<MarcCarController>();
+            marcCarController.enabled = true;
+            marcCarController.driver = this.gameObject;
+
+            this.gameObject.SetActive(false);
+        }
+        //Enter Red Car
+        if (enterCar && (distanceR < 3f))
+        {
+            MarcCarController marcCarController = rCar.GetComponent<MarcCarController>();
+            marcCarController.enabled = true;
+            marcCarController.driver = this.gameObject;
 
             this.gameObject.SetActive(false);
         }
