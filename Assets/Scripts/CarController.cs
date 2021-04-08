@@ -2,49 +2,50 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
-    [Tooltip("Rotation Speed In Degrees per Second")]
-    public float rotationSpeed = 80;
+    [Tooltip("Movement Speed In Meters per Second")]
+    public float movementSpeed = 0.1f;
+
+    public float steering = 0.1f;
 
     public KeyCode moveForwardKey;
     public KeyCode reverseKey;
-    public KeyCode rotateLeftKey;
-    public KeyCode rotateRightKey;
+    public KeyCode rightKey;
+    public KeyCode leftKey;
 
-    // Update is called once per frame
+
     void Update()
     {
-        //Accelerates
-        bool forward = Input.GetKey(moveForwardKey);
+
+        bool forward = UnityEngine.Input.GetKey(moveForwardKey);
+        bool reverse = UnityEngine.Input.GetKey(reverseKey);
+        bool right = UnityEngine.Input.GetKey(rightKey);
+        bool left = UnityEngine.Input.GetKey(leftKey);
+
+        Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+
+        //Movement forward
         if(forward)
         {
-            GetComponent<Rigidbody2D>().AddForce(transform.up);
+            rigidbody.AddForce((Vector2)(transform.up * movementSpeed));
         }
-
-        //Reverse
-        bool reverse = Input.GetKey(reverseKey);
+        //Movement backwards
         if(reverse)
         {
-            GetComponent<Rigidbody2D>().AddForce(-transform.up);
+            rigidbody.AddForce((Vector2)(-transform.up * movementSpeed));
         }
-
-        // Rotates Right
-        bool rotateRight = UnityEngine.Input.GetKey(rotateRightKey);
-        if (rotateRight)
+        //Steering right
+        if(right)
         {
-            transform.Rotate(0f, 0f, -rotationSpeed * Time.deltaTime);
-        }
 
-        // Rotates Left
-        bool rotateLeft = UnityEngine.Input.GetKey(rotateLeftKey);
-        if (rotateLeft)
+            rigidbody.rotation += steering * rigidbody.velocity.magnitude;
+            // The cars speed and direction - rigidbody.velocity.magnitude
+
+        }
+        //Steering left
+        if(left)
         {
-            transform.Rotate(0f, 0f, rotationSpeed * Time.deltaTime);
+            rigidbody.rotation -= steering * rigidbody.velocity.magnitude;
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
 
     }
 }
