@@ -12,6 +12,7 @@ public class MarcCarController : MonoBehaviour
     public KeyCode reverseKey;
     public KeyCode rightKey;
     public KeyCode leftKey;
+    public KeyCode leaveCarKey;
 
     void Update()
     {
@@ -53,5 +54,17 @@ public class MarcCarController : MonoBehaviour
             // And we also rotate the velocity, so that we do not continue sliding in the old direction:
             rigidbody.velocity = Quaternion.Euler(rotateBy) * rigidbody.velocity;
         }
+
+        /*
+        //Leaving a car
+        bool leaveCar = Input.GetKeyDown(leaveCarKey);
+        GameObject human = GameObject.Find("Human");
+
+        if (leaveCar)
+        {
+            human.SetActive(true);
+            GetComponent<MarcCarController>().disabled = true;
+        }
+        */
     }
 }

@@ -13,6 +13,8 @@ public class CarController : MonoBehaviour
     public KeyCode rightKey;
     public KeyCode leftKey;
 
+    public GameObject driver;
+
     void Update()
     {
         bool forward = UnityEngine.Input.GetKey(moveForwardKey);
@@ -38,5 +40,11 @@ public class CarController : MonoBehaviour
         {
             transform.Rotate(0f, 0f, rotationSpeed * Time.deltaTime * rigidbody.velocity.magnitude);
         }
+
+        /* if (exit)
+         * set the driver's position to our own position
+         * activate the driver
+         * disable ourselves (this script) 
+         */
     }
 }

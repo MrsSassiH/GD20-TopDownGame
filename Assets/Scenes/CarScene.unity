@@ -150,17 +150,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 361243696}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18b06fbbe47a0804da674581116299b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d9980d4671c8f6448bc2dbe2ee85e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 20000
   rotationSpeed: 10
-  moveForwardKey: 119
-  reverseKey: 115
-  rightKey: 100
-  leftKey: 97
+  moveForwardKey: 0
+  reverseKey: 0
+  rightKey: 0
+  leftKey: 0
 --- !u!61 &361243698
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -414,7 +414,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1500
+  m_Mass: 15
   m_LinearDrag: 2
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -495,16 +495,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 875381364}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d9980d4671c8f6448bc2dbe2ee85e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5000
-  moveForwardKey: 0
-  reverseKey: 0
-  rightKey: 0
-  leftKey: 0
+  movementSpeed: 20000
+  rotationSpeed: 10
+  moveForwardKey: 119
+  reverseKey: 115
+  rightKey: 100
+  leftKey: 97
 --- !u!1 &927652450
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,7 +519,7 @@ GameObject:
   - component: {fileID: 927652453}
   - component: {fileID: 927652454}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Human
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -596,12 +597,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 927652450}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f03e581d4e84c0d459a58992c4f7a003, type: 3}
+  m_Script: {fileID: 11500000, guid: ce3a69f29297a70498130e8c98a8cb84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 4
+  movementSpeed: 5
+  forwardKey: 119
+  backwardKey: 115
+  leftKey: 0
+  rightKey: 0
+  enterCarKey: 102
 --- !u!114 &927652454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,7 +615,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 927652450}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d4e6b4b780739d499f2cf30b5c83dab, type: 3}
   m_Name: 

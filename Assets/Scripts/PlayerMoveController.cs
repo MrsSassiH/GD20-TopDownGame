@@ -9,6 +9,16 @@ public class PlayerMoveController : MonoBehaviour
     public KeyCode backwardKey;
     public KeyCode leftKey;
     public KeyCode rightKey;
+    public KeyCode enterCarKey;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // Use transform.position, IF you want to set the position to a certain value
+        // For example: if you want the player to teleport
+        // Or to set a new Enemy's Position to its Spawn Point
+        transform.position = Vector3.zero;
+    }
 
     void Update()
     {
@@ -36,14 +46,20 @@ public class PlayerMoveController : MonoBehaviour
         {
             transform.Translate(Vector3.right * (movementSpeed * Time.deltaTime));
         }
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Use transform.position, IF you want to set the position to a certain value
-        // For example: if you want the player to teleport
-        // Or to set a new Enemy's Position to its Spawn Point
-        transform.position = Vector3.zero;
+        //Entering a car
+        bool enterCar = Input.GetKeyDown(enterCarKey);
+        GameObject car = GameObject.Find("BlueCar");
+
+        float distance = Vector3.Distance(this.transform.position, car.transform.position);
+
+        if(enterCar && (distance < 3))
+        {
+            CarController carController = car.GetComponent<CarController>();
+            carController.enabled = true;
+            carController.driver = this.gameObject;
+
+            this.gameObject.SetActive(false);
+        }
     }
 }
