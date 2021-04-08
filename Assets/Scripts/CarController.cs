@@ -5,17 +5,16 @@ public class CarController : MonoBehaviour
     [Tooltip("Movement Speed In Meters per Second")]
     public float movementSpeed = 0.1f;
 
-    public float steering = 0.1f;
+    [Tooltip("Rotation Speed In Degrees per Second")]
+    public float rotationSpeed = 180;
 
     public KeyCode moveForwardKey;
     public KeyCode reverseKey;
     public KeyCode rightKey;
     public KeyCode leftKey;
 
-
     void Update()
     {
-
         bool forward = UnityEngine.Input.GetKey(moveForwardKey);
         bool reverse = UnityEngine.Input.GetKey(reverseKey);
         bool right = UnityEngine.Input.GetKey(rightKey);
@@ -23,29 +22,21 @@ public class CarController : MonoBehaviour
 
         Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 
-        //Movement forward
         if(forward)
         {
             rigidbody.AddForce((Vector2)(transform.up * movementSpeed));
         }
-        //Movement backwards
-        if(reverse)
+        if (reverse)
         {
             rigidbody.AddForce((Vector2)(-transform.up * movementSpeed));
         }
-        //Steering right
-        if(right)
+        if (right)
         {
-
-            rigidbody.rotation += steering * rigidbody.velocity.magnitude;
-            // The cars speed and direction - rigidbody.velocity.magnitude
-
+            transform.Rotate(0f, 0f, -rotationSpeed * Time.deltaTime * rigidbody.velocity.magnitude);
         }
-        //Steering left
-        if(left)
+        if (left)
         {
-            rigidbody.rotation -= steering * rigidbody.velocity.magnitude;
+            transform.Rotate(0f, 0f, rotationSpeed * Time.deltaTime * rigidbody.velocity.magnitude);
         }
-
     }
 }

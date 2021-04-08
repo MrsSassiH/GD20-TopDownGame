@@ -152,15 +152,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 361243696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d9980d4671c8f6448bc2dbe2ee85e65, type: 3}
+  m_Script: {fileID: 11500000, guid: 18b06fbbe47a0804da674581116299b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5000
-  steering: 0.1
-  moveForwardKey: 0
-  reverseKey: 0
-  rightKey: 0
-  leftKey: 0
+  movementSpeed: 20000
+  rotationSpeed: 10
+  moveForwardKey: 119
+  reverseKey: 115
+  rightKey: 100
+  leftKey: 97
 --- !u!61 &361243698
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -199,8 +199,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1500
-  m_LinearDrag: 1.5
+  m_Mass: 15
+  m_LinearDrag: 2
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: eaff705c20dea2e488af634122922f4b, type: 2}
@@ -501,10 +501,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5000
-  steering: 0.1
-  moveForwardKey: 119
+  moveForwardKey: 0
   reverseKey: 0
-  rightKey: 100
+  rightKey: 0
   leftKey: 0
 --- !u!1 &927652450
 GameObject:
