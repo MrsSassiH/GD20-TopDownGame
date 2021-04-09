@@ -63,6 +63,9 @@ public class PlayerMoveController : MonoBehaviour
             marcCarController.driver = this.gameObject;
 
             this.gameObject.SetActive(false);
+
+            AudioSource sound = bCar.GetComponent<AudioSource>();
+            sound.enabled = true;
         }
         //Enter Red Car
         if (enterCar && (distanceR < 3f))
@@ -72,6 +75,10 @@ public class PlayerMoveController : MonoBehaviour
             marcCarController.driver = this.gameObject;
 
             this.gameObject.SetActive(false);
+
+            AudioSource sound = rCar.GetComponent<AudioSource>();
+            sound.enabled = true;
+
         }
     }
 }

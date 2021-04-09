@@ -70,6 +70,9 @@ public class MarcCarController : MonoBehaviour
 
             MarcCarController marcCarController = bCar.GetComponent<MarcCarController>();
             marcCarController.enabled = false;
+
+            AudioSource sound = bCar.GetComponent<AudioSource>();
+            sound.enabled = false;
         }
         //Leave Red Car
         if (exit)
@@ -80,6 +83,9 @@ public class MarcCarController : MonoBehaviour
 
             MarcCarController marcCarController = rCar.GetComponent<MarcCarController>();
             marcCarController.enabled = false;
+
+            AudioSource sound = rCar.GetComponent<AudioSource>();
+            sound.enabled = false;
         }
     }
 }
