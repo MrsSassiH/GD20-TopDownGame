@@ -13,6 +13,19 @@ public class CarController : MonoBehaviour
 
     void Update()
     {
+        Drive();
+
+        PlayerInput playerInput = driver.GetComponent<PlayerInput>();
+        //Leave a car
+        bool exit = Input.GetKeyDown(playerInput.enterCarKey);
+        if (exit)
+        {
+            Exit();
+        }
+    }
+
+    public void Drive()
+    {
         PlayerInput playerInput = driver.GetComponent<PlayerInput>();
 
         bool forward = Input.GetKey(playerInput.forwardKey);
@@ -26,20 +39,20 @@ public class CarController : MonoBehaviour
         //Moving forward
         if (forward)
         {
-            rigidbody.AddForce((Vector2) transform.up * (movementSpeed * Time.deltaTime));
+            rigidbody.AddForce((Vector2)transform.up * (movementSpeed * Time.deltaTime));
         }
 
         //Moving backward
         if (reverse)
         {
-            rigidbody.AddForce((Vector2) (-transform.up * (movementSpeed * Time.deltaTime)));
+            rigidbody.AddForce((Vector2)(-transform.up * (movementSpeed * Time.deltaTime)));
         }
 
         //Turning right
         if (right)
         {
             var rotateBy = new Vector3(0f, 0f, -rotationSpeed * Time.deltaTime * rigidbody.velocity.magnitude);
-            
+
             transform.Rotate(rotateBy);
             rigidbody.velocity = Quaternion.Euler(rotateBy) * rigidbody.velocity;
         }
@@ -53,12 +66,6 @@ public class CarController : MonoBehaviour
             transform.Rotate(rotateBy);
             // And we also rotate the velocity, so that we do not continue sliding in the old direction:
             rigidbody.velocity = Quaternion.Euler(rotateBy) * rigidbody.velocity;
-        }
-
-        //Leave a car
-        if (exit)
-        {
-            Exit();
         }
     }
 

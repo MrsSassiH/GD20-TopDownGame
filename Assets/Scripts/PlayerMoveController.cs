@@ -21,6 +21,18 @@ public class PlayerMoveController : MonoBehaviour
 
     void Update()
     {
+        Move();
+
+        //Entering a car
+        bool enterCar = Input.GetKeyDown(playerInput.enterCarKey);
+        if (enterCar)
+        {
+            Enter();
+        }
+    }
+
+    public void Move()
+    {
         bool forward = Input.GetKey(playerInput.forwardKey);
         bool backward = Input.GetKey(playerInput.backwardKey);
         bool left = Input.GetKey(playerInput.leftKey);
@@ -44,13 +56,6 @@ public class PlayerMoveController : MonoBehaviour
         if (right)
         {
             transform.Rotate(0f, 0f, -rotationSpeed * Time.deltaTime);
-        }
-
-        //Entering a car
-        bool enterCar = Input.GetKeyDown(playerInput.enterCarKey);
-        if (enterCar)
-        {
-            Enter();
         }
     }
 
