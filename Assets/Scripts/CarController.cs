@@ -19,6 +19,7 @@ public class CarController : MonoBehaviour
         bool reverse = Input.GetKey(playerInput.backwardKey);
         bool right = Input.GetKey(playerInput.rightKey);
         bool left = Input.GetKey(playerInput.leftKey);
+        bool exit = Input.GetKeyDown(playerInput.enterCarKey);
 
         Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 
@@ -55,42 +56,30 @@ public class CarController : MonoBehaviour
         }
 
         //Leave a car
-        bool exit = Input.GetKeyDown(playerInput.enterCarKey);
-        GameObject bCar = GameObject.Find("BlueCar");
-
         if (exit)
         {
-            Vector3 offSet = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 2, 0);
-            driver.transform.position = offSet;
-
-            driver.gameObject.SetActive(true);
-
-            this.enabled = false;
-
-            driver = null;
-
-            AudioSource sound = bCar.GetComponent<AudioSource>();
-            sound.enabled = false;
+            Exit();
         }
+    }
 
-        //GameObject bCar = GameObject.Find("BlueCar");
-        //GameObject rCar = GameObject.Find("RedCar");
 
-        //Leave Blue Car
+    //Leave a car
+    public void Exit()
+    {
+        CarController closestCar = Resources.FindObjectsOfTypeAll<CarController>()
+                .OrderBy((a) => Vector3.Distance(this.transform.position, a.transform.position))
+                .First();
 
-        /*
-        //Leave Red Car
-        if (exit)
-        {
-            driver.transform.position = this.transform.position;
+        Vector3 offSet = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 2, 0);
+        driver.transform.position = offSet;
 
-            driver.SetActive(true);
+        driver.gameObject.SetActive(true);
 
-            this.enabled = false;
+        this.enabled = false;
 
-            AudioSource sound = rCar.GetComponent<AudioSource>();
-            sound.enabled = false;
-        }
-        */
+        driver = null;
+
+        AudioSource sound = closestCar.GetComponent<AudioSource>();
+        sound.enabled = false;
     }
 }
