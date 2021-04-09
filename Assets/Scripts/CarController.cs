@@ -11,17 +11,17 @@ public class CarController : MonoBehaviour
 
     public GameObject driver;
 
+    public Transform exitPoint;
+
+    private bool HasDriver => driver != null;
+    private bool HasNoDriver => !HasDriver;
+
     void Update()
     {
-        Drive();
+        if (this.HasNoDriver)
+            return;
 
-        PlayerInput playerInput = driver.GetComponent<PlayerInput>();
-        //Leave a car
-        bool exit = Input.GetKeyDown(playerInput.enterCarKey);
-        if (exit)
-        {
-            Exit();
-        }
+        Drive();
     }
 
     public void Drive()
@@ -67,26 +67,41 @@ public class CarController : MonoBehaviour
             // And we also rotate the velocity, so that we do not continue sliding in the old direction:
             rigidbody.velocity = Quaternion.Euler(rotateBy) * rigidbody.velocity;
         }
+
+        if (exit)
+        {
+            Exit();
+        }
     }
 
+    //Enter a car
+    public void Enter(GameObject driverGo)
+    {
+        if (this.HasDriver)
+            Exit();
+
+        this.driver = driverGo;
+        driverGo.SetActive(false);
+
+        //Turn on sound
+        ActivateSound(true);
+    }
 
     //Leave a car
-    public void Exit()
+    void Exit()
     {
-        CarController closestCar = Resources.FindObjectsOfTypeAll<CarController>()
-                .OrderBy((a) => Vector3.Distance(this.transform.position, a.transform.position))
-                .First();
+        driver.transform.position = exitPoint.position;
 
-        Vector3 offSet = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 2, 0);
-        driver.transform.position = offSet;
-
-        driver.gameObject.SetActive(true);
-
-        this.enabled = false;
-
+        driver.SetActive(true);
         driver = null;
 
-        AudioSource sound = closestCar.GetComponent<AudioSource>();
-        sound.enabled = false;
+        //Turn off sound
+        ActivateSound(false);
+    }
+
+    private void ActivateSound(bool activate)
+    {
+        AudioSource sound = this.GetComponent<AudioSource>();
+        sound.enabled = activate;
     }
 }

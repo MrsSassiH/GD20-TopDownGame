@@ -22,21 +22,15 @@ public class PlayerMoveController : MonoBehaviour
     void Update()
     {
         Move();
-
-        //Entering a car
-        bool enterCar = Input.GetKeyDown(playerInput.enterCarKey);
-        if (enterCar)
-        {
-            Enter();
-        }
     }
 
-    public void Move()
+    void Move()
     {
         bool forward = Input.GetKey(playerInput.forwardKey);
         bool backward = Input.GetKey(playerInput.backwardKey);
         bool left = Input.GetKey(playerInput.leftKey);
         bool right = Input.GetKey(playerInput.rightKey);
+        bool enterCar = Input.GetKeyDown(playerInput.enterCarKey);
 
         // If the Forward Key is Pressed, MOVE the TRANSFORM in the UP-direction
         // scaled by the MOVEMENT SPEED and the DELTA TIME (the time that has passed)
@@ -57,44 +51,28 @@ public class PlayerMoveController : MonoBehaviour
         {
             transform.Rotate(0f, 0f, -rotationSpeed * Time.deltaTime);
         }
-    }
 
-
-    //Entering a car
-    public void Enter()
-    {
-        CarController closestCar = Resources.FindObjectsOfTypeAll<CarController>()
-                .OrderBy((a) => Vector3.Distance(this.transform.position, a.transform.position))
-                .First();
-
-        float distance = Vector3.Distance(this.transform.position, closestCar.transform.position);
-
-        if (distance < 3f)
+        if (enterCar)
         {
-            if (closestCar.driver == null)
+            CarController closestCar = GetClosesCar();
+
+            // Get the distance between the car's position and this' (the Human's) position
+            float distance = Vector3.Distance(closestCar.transform.position, this.transform.position);
+
+            // Only if the distance is smaller than the threshold...
+            if (distance < 3f)
             {
-                closestCar.enabled = true;
-                closestCar.driver = this.gameObject;
-
-                this.gameObject.SetActive(false);
-
-                AudioSource sound = closestCar.GetComponent<AudioSource>();
-                sound.enabled = true;
+                closestCar.Enter(this.gameObject);
             }
-            else
-            {
-                closestCar.Exit();
 
-                closestCar.enabled = true;
-                closestCar.driver = this.gameObject;
-
-                this.gameObject.SetActive(false);
-
-                AudioSource sound = closestCar.GetComponent<AudioSource>();
-                sound.enabled = true;
-            }
         }
     }
 
+    CarController GetClosesCar()
+    {
+        return Resources.FindObjectsOfTypeAll<CarController>()
+             .OrderBy((car) => Vector3.Distance(this.transform.position, car.transform.position))
+             .First();
+    }
 
 }
