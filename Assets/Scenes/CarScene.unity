@@ -243,8 +243,8 @@ MonoBehaviour:
   reverseKey: 115
   rightKey: 100
   leftKey: 97
-  leaveCarKey: 102
-  driver: {fileID: 927652450}
+  exitKey: 102
+  driver: {fileID: 0}
 --- !u!61 &361243698
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -928,8 +928,8 @@ MonoBehaviour:
   reverseKey: 115
   rightKey: 100
   leftKey: 97
-  leaveCarKey: 102
-  driver: {fileID: 927652450}
+  exitKey: 102
+  driver: {fileID: 0}
 --- !u!1 &927652450
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,9 @@ public class CarController : MonoBehaviour
     public KeyCode reverseKey;
     public KeyCode rightKey;
     public KeyCode leftKey;
+    public KeyCode exitKey;
+
+    public GameObject driver;
 
     void Update()
     {
@@ -22,21 +25,70 @@ public class CarController : MonoBehaviour
 
         Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 
+        //Moving forward
         if(forward)
         {
-            rigidbody.AddForce((Vector2)(transform.up * movementSpeed));
+            rigidbody.AddForce((Vector2) transform.up * (movementSpeed * Time.deltaTime));
         }
+
+        //Moving backward
         if (reverse)
         {
-            rigidbody.AddForce((Vector2)(-transform.up * movementSpeed));
+            rigidbody.AddForce((Vector2) (-transform.up * (movementSpeed * Time.deltaTime)));
         }
+
+        //Turning right
         if (right)
         {
-            transform.Rotate(0f, 0f, -rotationSpeed * Time.deltaTime * rigidbody.velocity.magnitude);
+            var rotateBy = new Vector3(0f, 0f, -rotationSpeed * Time.deltaTime * rigidbody.velocity.magnitude);
+            
+            transform.Rotate(rotateBy);
+            rigidbody.velocity = Quaternion.Euler(rotateBy) * rigidbody.velocity;
         }
+
+        //Turning left
         if (left)
         {
-            transform.Rotate(0f, 0f, rotationSpeed * Time.deltaTime * rigidbody.velocity.magnitude);
+            // We want to rotate on the z-axis:
+            var rotateBy = new Vector3(0f, 0f, rotationSpeed * Time.deltaTime * rigidbody.velocity.magnitude);
+            // We rotate the transform:
+            transform.Rotate(rotateBy);
+            // And we also rotate the velocity, so that we do not continue sliding in the old direction:
+            rigidbody.velocity = Quaternion.Euler(rotateBy) * rigidbody.velocity;
         }
+
+        //Leave a car
+        bool exit = Input.GetKeyDown(exitKey);
+        GameObject bCar = GameObject.Find("BlueCar");
+        GameObject rCar = GameObject.Find("RedCar");
+        //Leave Blue Car
+        if (exit)
+        {
+            driver.transform.position = this.transform.position;
+
+            driver.gameObject.SetActive(true);
+
+            this.enabled = false;
+
+            driver = null;
+
+            AudioSource sound = bCar.GetComponent<AudioSource>();
+            sound.enabled = false;
+        }
+        
+        /*
+        //Leave Red Car
+        if (exit)
+        {
+            driver.transform.position = this.transform.position;
+
+            driver.SetActive(true);
+
+            this.enabled = false;
+
+            AudioSource sound = rCar.GetComponent<AudioSource>();
+            sound.enabled = false;
+        }
+        */
     }
 }

@@ -58,7 +58,7 @@ public class PlayerMoveController : MonoBehaviour
         //Enter Blue Car
         if (enterCar && (distanceB < 3f))
         {
-            MarcCarController marcCarController = bCar.GetComponent<MarcCarController>();
+            CarController marcCarController = bCar.GetComponent<CarController>();
             marcCarController.enabled = true;
             marcCarController.driver = this.gameObject;
 
@@ -67,10 +67,12 @@ public class PlayerMoveController : MonoBehaviour
             AudioSource sound = bCar.GetComponent<AudioSource>();
             sound.enabled = true;
         }
+
+        /*
         //Enter Red Car
         if (enterCar && (distanceR < 3f))
         {
-            MarcCarController marcCarController = rCar.GetComponent<MarcCarController>();
+            CarController marcCarController = rCar.GetComponent<CarController>();
             marcCarController.enabled = true;
             marcCarController.driver = this.gameObject;
 
@@ -80,5 +82,6 @@ public class PlayerMoveController : MonoBehaviour
             sound.enabled = true;
 
         }
+        */
     }
 }
