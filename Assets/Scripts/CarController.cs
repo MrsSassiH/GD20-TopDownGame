@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class CarController : MonoBehaviour
@@ -8,25 +9,21 @@ public class CarController : MonoBehaviour
     [Tooltip("Rotation Speed In Degrees per Second")]
     public float rotationSpeed = 180;
 
-    public KeyCode moveForwardKey;
-    public KeyCode reverseKey;
-    public KeyCode rightKey;
-    public KeyCode leftKey;
-    public KeyCode exitKey;
-
     public GameObject driver;
 
     void Update()
     {
-        bool forward = UnityEngine.Input.GetKey(moveForwardKey);
-        bool reverse = UnityEngine.Input.GetKey(reverseKey);
-        bool right = UnityEngine.Input.GetKey(rightKey);
-        bool left = UnityEngine.Input.GetKey(leftKey);
+        PlayerInput playerInput = driver.GetComponent<PlayerInput>();
+
+        bool forward = Input.GetKey(playerInput.forwardKey);
+        bool reverse = Input.GetKey(playerInput.backwardKey);
+        bool right = Input.GetKey(playerInput.rightKey);
+        bool left = Input.GetKey(playerInput.leftKey);
 
         Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 
         //Moving forward
-        if(forward)
+        if (forward)
         {
             rigidbody.AddForce((Vector2) transform.up * (movementSpeed * Time.deltaTime));
         }
@@ -58,13 +55,13 @@ public class CarController : MonoBehaviour
         }
 
         //Leave a car
-        bool exit = Input.GetKeyDown(exitKey);
+        bool exit = Input.GetKeyDown(playerInput.enterCarKey);
         GameObject bCar = GameObject.Find("BlueCar");
-        GameObject rCar = GameObject.Find("RedCar");
-        //Leave Blue Car
+
         if (exit)
         {
-            driver.transform.position = this.transform.position;
+            Vector3 offSet = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 2, 0);
+            driver.transform.position = offSet;
 
             driver.gameObject.SetActive(true);
 
@@ -75,7 +72,12 @@ public class CarController : MonoBehaviour
             AudioSource sound = bCar.GetComponent<AudioSource>();
             sound.enabled = false;
         }
-        
+
+        //GameObject bCar = GameObject.Find("BlueCar");
+        //GameObject rCar = GameObject.Find("RedCar");
+
+        //Leave Blue Car
+
         /*
         //Leave Red Car
         if (exit)

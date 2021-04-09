@@ -1,15 +1,14 @@
+using System.Linq;
 using UnityEngine;
 
 public class PlayerMoveController : MonoBehaviour
 {
     [Tooltip("Movement Speed In Meters per Second")]
     public float movementSpeed = 0.1f;
+    public float rotationSpeed = 180;
 
-    public KeyCode forwardKey;
-    public KeyCode backwardKey;
-    public KeyCode leftKey;
-    public KeyCode rightKey;
-    public KeyCode enterCarKey;
+    public PlayerInput playerInput;
+
 
     // Start is called before the first frame update
     void Start()
@@ -22,10 +21,10 @@ public class PlayerMoveController : MonoBehaviour
 
     void Update()
     {
-        bool forward = Input.GetKey(forwardKey);
-        bool backward = Input.GetKey(backwardKey);
-        bool left = Input.GetKey(leftKey);
-        bool right = Input.GetKey(rightKey);
+        bool forward = Input.GetKey(playerInput.forwardKey);
+        bool backward = Input.GetKey(playerInput.backwardKey);
+        bool left = Input.GetKey(playerInput.leftKey);
+        bool right = Input.GetKey(playerInput.rightKey);
 
         // If the Forward Key is Pressed, MOVE the TRANSFORM in the UP-direction
         // scaled by the MOVEMENT SPEED and the DELTA TIME (the time that has passed)
@@ -40,33 +39,67 @@ public class PlayerMoveController : MonoBehaviour
         }
         if (left)
         {
-            transform.Translate(Vector3.left * (movementSpeed * Time.deltaTime));
+            transform.Rotate(0f, 0f, rotationSpeed * Time.deltaTime);
         }
         if (right)
         {
-            transform.Translate(Vector3.right * (movementSpeed * Time.deltaTime));
+            transform.Rotate(0f, 0f, -rotationSpeed * Time.deltaTime);
         }
-
 
         //Entering a car
-        bool enterCar = Input.GetKeyDown(enterCarKey);
-        GameObject bCar = GameObject.Find("BlueCar");
-        GameObject rCar = GameObject.Find("RedCar");
-
-        float distanceB = Vector3.Distance(this.transform.position, bCar.transform.position);
-        float distanceR = Vector3.Distance(this.transform.position, rCar.transform.position);
-        //Enter Blue Car
-        if (enterCar && (distanceB < 3f))
+        bool enterCar = Input.GetKeyDown(playerInput.enterCarKey);
+        if (enterCar)
         {
-            CarController marcCarController = bCar.GetComponent<CarController>();
-            marcCarController.enabled = true;
-            marcCarController.driver = this.gameObject;
+            GameObject bCar = GameObject.Find("BlueCar");
 
-            this.gameObject.SetActive(false);
+            /*
+            CarController closestCar = Resources.FindObjectsOfTypeAll<CarController>()
+                            .OrderBy((a) => Vector3.Distance(this.transform.position, a.transform.position))
+                            .First();
+            */
 
-            AudioSource sound = bCar.GetComponent<AudioSource>();
-            sound.enabled = true;
+            float distance = Vector3.Distance(this.transform.position, bCar.transform.position);
+
+            CarController carController = bCar.GetComponent<CarController>();
+            if (distance < 3f)
+            {
+
+                if (carController.driver == null)
+                {
+                    carController.enabled = true;
+                    carController.driver = this.gameObject;
+
+                    this.gameObject.SetActive(false);
+
+                    AudioSource sound = bCar.GetComponent<AudioSource>();
+                    sound.enabled = true;
+                }
+                else
+                {
+                    /*If there is a driver
+                     * - Remove driver from carController
+                     * - Set the driver active
+                     * - Add the new Diver to CarController
+                     */
+                  
+                    Vector3 offSet = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 2, 0);
+                    carController.driver.SetActive(true);
+                    carController.driver.transform.position = offSet;
+
+                    carController.driver = null;
+
+                    carController.enabled = true;
+
+                    AudioSource sound = bCar.GetComponent<AudioSource>();
+                    sound.enabled = true;
+                }
+            }
         }
+
+        //GameObject rCar = GameObject.Find("RedCar");
+
+        //float distance = Vector3.Distance(this.transform.position, car.transform.position);
+        //float distanceR = Vector3.Distance(this.transform.position, rCar.transform.position);
 
         /*
         //Enter Red Car
