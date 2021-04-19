@@ -99,6 +99,7 @@ public class CarController : MonoBehaviour
         ActivateSound(false);
     }
 
+    //Actives or deacivates sound
     private void ActivateSound(bool activate)
     {
         AudioSource sound = this.GetComponent<AudioSource>();
